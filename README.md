@@ -8,3 +8,7 @@ All of the classes in the helper classes folder need the plugins, accept for the
 
 All of the classes contain documentation in the form of comments in the code.
 
+There is a examples folder that has some examples of the classes being used.
+
+documentation for each class may come in the future.
+

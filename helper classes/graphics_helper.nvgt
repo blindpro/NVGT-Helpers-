@@ -11,6 +11,18 @@ int g;
 int b;
 bool auto_colors;
 graphics_renderer renderer;
+color white(255 ,255 ,255);
+color black(0, 0,0 );
+color red(255, 0, 0);
+color green(0, 255, 0);
+color blue(0,0, 255);
+color gray(128, 128, 128);
+color yellow(255, 255, 0);
+pazition top_left(20,20);
+pazition top_center(400,20);
+pazition center(400 ,300);
+pazition bottom_left(20, 560);
+pazition bottom_center(400, 560);
 //Constructer. You can choose to set the r, g, and b values of the script witch if you have auto_colors enabled, will automaticly fill out those values where ever you may needthem.
 graphics_helper(int r, int g, int b, bool colors)
 {
@@ -85,6 +97,16 @@ else
 return false;
 }
 }
+//You can pass any color object. There are color objects that contain the rgb values.
+void draw_text(string text, int x, int y,color @c)
+{
+renderer.draw_text(text,x,y,c.r,c.g,c.b);
+}
+//This function needs a color and paiziton objects, both of witch contain the data.
+void draw_text(string text, pazition @p, color @c)
+{
+renderer.draw_text(text,p.x,p.y,c.r,c.g,c.b);
+}
 void draw_text_wrapped(string text, int x, int y, int w, int r, int g, int b)
 {
 renderer.draw_text_wrapped(text,x,y,w,r,g,b);
@@ -142,5 +164,29 @@ else
 {
 return false;
 }
+}
+}
+//helper class
+class color
+{
+int r;
+int g;
+int b;
+color(int r, int g, int b)
+{
+this.r = r;
+this.g = g;
+this.b = b;
+}
+
+}
+class pazition
+{
+int x;
+int y;
+pazition(int x, int y)
+{
+this.x = x;
+this.y = y;
 }
 }
