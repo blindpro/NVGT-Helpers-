@@ -1,0 +1,105 @@
+#include"dget.nvgt"
+#include"form.nvgt"
+enum control_type
+{
+button = 0,
+checkbox = 1,
+input_box = 2
+}
+
+class window_gui
+{
+dictionary all_controls;
+dictionary buttons;
+dictionary checkboxes;
+dictionary input_boxes;
+dictionary lists;
+audio_form form;
+private int get_id(string name)
+{
+int id = -1;
+while(id == -1)
+{
+wait(5);
+id = dgetn(buttons,name,-1);
+id =dgetn(checkboxes,name,-1);
+id = dgetn(input_boxes,name,-1);
+id = dgetn(lists,name,-1);
+}
+return id;
+}
+void run()
+{
+form.monitor();
+}
+void setup_window(string name)
+{
+form.create_window(name);
+}
+void set_state(string control, bool enabled, bool visible)
+{
+form.set_state(dgetn(all_controls,control), enabled, visible);
+}
+void delete_control(string name)
+{
+form.delete_control(get_id(name));
+all_controls.delete(name);
+}
+void create_button(string name, bool primary = false, bool cansel = false)
+{
+int id = form.create_button(name,primary,cansel);
+buttons.set(name,id);
+all_controls.set(name,id);
+}
+bool is_pressed(string name)
+{
+return form.is_pressed(dgetn(buttons,name));
+}
+void create_checkbox(string name, bool chect = false, bool read_only = false)
+{
+int id = form.create_checkbox(name,chect,read_only);
+checkboxes.set(name,id);
+all_controls.set(name,id);
+}
+bool chect(string name)
+{
+return form.is_checked(dgetn(checkboxes,name));
+}
+void set_chect(string name, bool chect)
+{
+form.set_checkbox_mark(dgetn(checkboxes,name), chect);
+}
+void create_input_box(string name, string default_text = "", string mask = "", int maximum_length  = 0, bool read_only = false, bool multiline  = false, bool multiline_enter  = true)
+{
+int id = form.create_input_box(name,default_text,mask,maximum_length,read_only,multiline,multiline_enter);
+input_boxes.set(name,id);
+all_controls.set(name,id);
+}
+string get_text(string name)
+{
+return form.get_text(dgetn(input_boxes,name));
+}
+void set_text(string name, string text)
+{
+form.set_text(dgetn(input_boxes,name),text);
+}
+void create_list(string name, int maximum_items  = 0, bool multiselect  = false, bool repeat_boundary_items  = false)
+{
+int id = form.create_list(name,maximum_items,multiselect,repeat_boundary_items);
+lists.set(name,id);
+all_controls.set(name,id);
+}
+void add_list_item(string control, string item,int pazition = -1, bool selected = false, bool focus_if_first  = true)
+{
+form.add_list_item(dgetn(lists,control),item,pazition,selected,focus_if_first );
+}
+void clear_list(string name)
+{
+form.clear_list(dgetn(lists,name));
+}
+int get_list_pazition(string name)
+{
+return form.get_list_position(dgetn(lists,name));
+}
+
+}
