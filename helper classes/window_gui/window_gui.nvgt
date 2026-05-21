@@ -1,3 +1,4 @@
+#pragma library
 #include"screen.nvgt"
 #include"helper_functions.nvgt"
 #include"gui_control.nvgt"
@@ -16,7 +17,6 @@ class window_gui
 string last_file;
 dictionary screens;
 dictionary controls;
-helper_functions f;
 audio_form form;
 private int get_id(string name)
 {
@@ -62,6 +62,21 @@ form.focus(get_id(name));
 void focus_silently(string name)
 {
 form.focus_silently(get_id(name));
+}
+string get_focus()
+{
+int id = form.get_current_focus();
+string[] keys = controls.get_keys();
+for(int i = 0; i<keys.length(); i++)
+{
+gui_control g;
+controls.get(keys[i],g);
+if(g.id == id)
+{
+return g.name;
+}
+}
+return "";
 }
 void delete_control(string name)
 {
@@ -198,7 +213,7 @@ return false;
 }
 void add_exit_button(string name, bool primary = false, bool cansel = false)
 {
-create_button(name,action(f.close),primary,cansel);
+create_button(name,helpers::close,primary,cansel);
 }
 void create_screen(string name)
 {
